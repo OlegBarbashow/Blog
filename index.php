@@ -1,15 +1,23 @@
-<?php
-	include_once('startup.php');
-	include_once('model.php');
-	
-	startup();
-	
-	$articles = articles_all();
-	
-	for($i = 0; $i < count($articles); $i++){
-		$articles[$i]['intro'] = articles_intro($articles[$i]);
+<?php	
+	function __autoload($className){
+		include_once('c/' . $className . '.php');
 	}
 	
-	header('Content-Type: text/html; charset=utf-8');
+	switch($_GET['c']){
+		case 'article':
+			$controller = new C_Article();
+			break;
+		case 'editor':
+			$controller = new C_Editor();
+			break;
+		case 'new':
+			$controller = new C_New();
+			break;
+		case 'edit':
+			$controller = new C_Edit();
+			break;
+		default:
+			$controller = new C_View();
+	}
 	
-	include_once('theme/index.php');
+	$controller->Request();

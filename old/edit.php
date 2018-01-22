@@ -1,7 +1,7 @@
 <?php
-	//include_once('helpFiles/showError.php');
 	include_once('startup.php');
 	include_once('model.php');
+	include_once('view.php');
 	
 	startup();
 	
@@ -27,8 +27,13 @@
 		$id_article = $_GET['id_article'];
 		$article = articles_get($id_article);
 	}
+
+	$title = 'Редактированние';
+	$content = view_include('theme/v_edit.php', array('article'=>$article));
 	
-	//header('Content-type: text/html; charset=utf-8');
 	
-	include_once('theme/edit.php');
+	$page = view_include('theme/v_main.php', array('content'=>$content,
+												   'title'=>$title));
+	header('Content-type: text/html; charset=utf-8');
 	
+	echo $page;
