@@ -1,7 +1,5 @@
 <?php
-include_once('c/C_Base.php');
-
-class C_View extends C_Base{
+class C_ArticleList extends C_Base{
 	protected $articles;
 	
 	function __construct(){
@@ -10,10 +8,12 @@ class C_View extends C_Base{
 	
 	protected function OnInput(){
 		parent::OnInput();
+		$mArticles = M_Articles::getInstance();
 		$this->title = $this->title . 'Главная';
-		$this->articles = articles_all();
+		
+		$this->articles = $mArticles->all();
 		for($i = 0; $i < count($this->articles); $i++){
-			$this->articles[$i]['intro'] = articles_intro($this->articles[$i]);
+			$this->articles[$i]['intro'] = $mArticles->intro($this->articles[$i]);
 		}
 	}
 	

@@ -1,19 +1,20 @@
 <?php
-include_once('c/Controller.php');
 include_once('m/startup.php');
-include_once('m/model.php');
 
 abstract class C_Base extends Controller{
-	protected $title; 		// page title
-	protected $content;		// page content
+	protected $title = ''; 		// page title
+	protected $content = '';	// page content
+	private $timeStart = 0;		// generation time
+	protected $menuActive = '';	// select active menu
 	
 	function __construct(){
 		
 	}
 	
 	protected function OnInput(){
+		$this->timeStart = microtime();
 		startup();
-		$this->title = '';
+		$this->title = 'Broadway: ';
 	}
 	
 	protected function OnOutput(){
@@ -22,5 +23,7 @@ abstract class C_Base extends Controller{
 						
 		header('Content-Type: text/html; charset=utf-8');
 		echo $page;
+		$timeEnd = microtime() - $this->timeStart;
+		echo $timeEnd;
 	}
 }
